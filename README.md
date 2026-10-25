@@ -44,14 +44,32 @@ only renders state and forwards actions.
 
 You need JDK 21 and a JavaFX 21 SDK.
 
-```bash
-javac --module-path /path/to/javafx-sdk/lib       --add-modules javafx.controls,javafx.fxml       -d out $(find src -name "*.java")
+### Windows (PowerShell)
 
-java --module-path /path/to/javafx-sdk/lib      --add-modules javafx.controls,javafx.fxml      -cp out main.Main
+```powershell
+$javafx  = "C:\javafx-sdk-21.0.10\lib"
+$sources = Get-ChildItem -Recurse src -Filter *.java | ForEach-Object FullName
+
+javac --module-path $javafx --add-modules javafx.controls,javafx.fxml `
+      -d out $sources
+
+java --module-path $javafx --add-modules javafx.controls,javafx.fxml `
+     -cp "out;src" main.Main
 ```
 
-On Windows, replace `/path/to/javafx-sdk/lib` with e.g.
-`C:\javafx-sdk-21.0.10\lib`.
+`src` is on the runtime classpath so the `/assets/...` images can be loaded.
+
+### Linux / macOS
+
+```bash
+JAVAFX=/path/to/javafx-sdk-21.0.10/lib
+
+javac --module-path "$JAVAFX" --add-modules javafx.controls,javafx.fxml \
+      -d out $(find src -name "*.java")
+
+java --module-path "$JAVAFX" --add-modules javafx.controls,javafx.fxml \
+     -cp "out:src" main.Main
+```
 
 ## What I learned
 
