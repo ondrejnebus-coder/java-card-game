@@ -1,0 +1,7 @@
+*.class
+out/
+build/
+.idea/
+*.iml
+savegame.dat
+.DS_Store
